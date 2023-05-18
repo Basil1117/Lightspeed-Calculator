@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
 
         self.setWindowTitle("My App")
-        self.setFixedSize(QSize(300,250))
+        self.setFixedSize(QSize(300,200))
         layout = QVBoxLayout()
     
         title_label = QLabel("Light Speed Calculator")
@@ -45,9 +45,7 @@ class MainWindow(QMainWindow):
         self.distance_input = QDoubleSpinBox()
         self.locations_input = QComboBox()
         self.locations_input.addItems(DISTANCES.keys())
-        self.locations_input.currentTextChanged.connect(self.get_location)
-        time_label = QLabel("Time")
-        self.time_output = QDoubleSpinBox()        
+        self.locations_input.currentTextChanged.connect(self.get_location)       
         self.calculate_button = QPushButton("Calculate")
         self.calculate_button.clicked.connect(self.calculate)
 
@@ -58,19 +56,16 @@ class MainWindow(QMainWindow):
         left_pane.addWidget(self.distance_input)
         self.distance_input.setRange(0,9999999999)
         left_pane.addWidget(self.locations_input)
-        left_pane.addWidget(time_label)
-        left_pane.addWidget(self.time_output)
-        self.time_output.setRange(0,9999999999)
         left_pane.addWidget(self.calculate_button)
 
         # Right pane inputs
         right_pane = QVBoxLayout()
-        output_box = QLineEdit()
-        output_box.setMaximumHeight(100)
-        output_box.setMaximumWidth(150)
-        output_box.setPlaceholderText("Results")
+        self.output_box = QLineEdit()
+        self.output_box.setMaximumHeight(100)
+        self.output_box.setMaximumWidth(150)
+        self.output_box.setPlaceholderText("Results")
 
-        right_pane.addWidget(output_box)
+        right_pane.addWidget(self.output_box)
           
 
         main_pane.addLayout(left_pane)
@@ -81,15 +76,16 @@ class MainWindow(QMainWindow):
         widget.setLayout(layout)
         self.setCentralWidget(widget)
     
+        
     # An attempt to make the push button calculate
-    def divide(x, y):
-        return x / y
-    num1 = 
-    num2 = 
-    if():
-        print(num1, "/", num2, "=", divide(num1, num2))
+    # def divide(x, y):
+    #     return x / y
+    # num1 = 
+    # num2 = ()
+    # if():
+    #     print(num1, "/", num2, "=", divide(num1, num2))
     # End of attempt
-    def convert_time(time):
+    def convert_time(self, time):
         day = time // (24 * 3600)
         time = time % (24 * 3600)
         hour = time // 3600
@@ -100,8 +96,10 @@ class MainWindow(QMainWindow):
         return "d:h:m:s-> %d:%d:%d:%d" % (day, hour, minutes, seconds)
 
     def calculate(self):
-        distance=self.distance_input.text()
-        print(distance)
+        distance=float(self.distance_input.text())
+        speed=float(self.speed_input.text())
+        results=self.convert_time(distance/speed)
+        self.output_box.setText(results)
 
     def get_location(self):
         location = self.locations_input.currentText()
