@@ -2,7 +2,7 @@ import sys
 from PyQt6.QtCore import QSize
 from PyQt6.QtWidgets import ( QApplication, QMainWindow, QWidget,
                              QHBoxLayout,QVBoxLayout,QLabel,QSpinBox,
-                             QDoubleSpinBox,QPushButton,QLineEdit,
+                             QDoubleSpinBox,QPushButton,QTextEdit,
                              QComboBox)
 from PyQt6.QtGui import QPalette, QColor
 
@@ -29,10 +29,11 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
 
         self.setWindowTitle("My App")
-        self.setFixedSize(QSize(300,200))
+        self.setFixedSize(QSize(500,250))
         layout = QVBoxLayout()
     
         title_label = QLabel("Light Speed Calculator")
+        title_label.setStyleSheet("font-size:26px;")
         layout.addWidget(title_label)
 
         main_pane = QHBoxLayout()
@@ -40,8 +41,10 @@ class MainWindow(QMainWindow):
         # Left pane inputs
         left_pane = QVBoxLayout()
         speed_label = QLabel("Speed")
+        speed_label.setStyleSheet("font-size:20px;")
         self.speed_input = QSpinBox()
         distance_label = QLabel("Distance")
+        distance_label.setStyleSheet("font-size:20px;")
         self.distance_input = QDoubleSpinBox()
         self.locations_input = QComboBox()
         self.locations_input.addItems(DISTANCES.keys())
@@ -60,9 +63,9 @@ class MainWindow(QMainWindow):
 
         # Right pane inputs
         right_pane = QVBoxLayout()
-        self.output_box = QLineEdit()
-        self.output_box.setMaximumHeight(100)
-        self.output_box.setMaximumWidth(150)
+        self.output_box = QTextEdit()
+        self.output_box.setMaximumHeight(200)
+        self.output_box.setMaximumWidth(250)
         self.output_box.setPlaceholderText("Results")
 
         right_pane.addWidget(self.output_box)
@@ -85,7 +88,7 @@ class MainWindow(QMainWindow):
         minutes = time // 60
         time %= 60
         seconds = time
-        return "It would take -> %d:%d:%d:%d" % (day, hour, minutes, seconds)
+        return "It would take about -> %d:%d:%d:%d to reach your destination." % (day, hour, minutes, seconds)
 
     def calculate(self):
         distance=float(self.distance_input.text())
@@ -101,6 +104,36 @@ class MainWindow(QMainWindow):
 app = QApplication(sys.argv)
 
 window = MainWindow()
+app.setStyleSheet("""
+    QWidget{
+        background-color: "#526D82";
+        color: "#DDE6ED";
+        font-size:20px;
+    }
+    QSpinBox {
+        background-color: "#DDE6ED";
+        color: "#27374D";
+    }
+    QDoubleSpinBox{
+        background-color: "#DDE6ED";
+        color: "#27374D";
+    }
+    QVBoxLayout{
+        background-color: "#526D82";
+    }
+    QComboBox{
+        background-color: "#DDE6ED";
+        color: "#27374D";
+    }
+    QPushButton {
+        font-size: 16px; color:"#DDE6ED";
+        background-color: "#27374D"
+    }
+    QLineEdit {
+        background-color: "#DDE6ED";
+        color: "#27374D";
+    }
+""")
 window.show()
 
 app.exec()
