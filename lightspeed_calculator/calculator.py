@@ -77,14 +77,6 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(widget)
     
         
-    # An attempt to make the push button calculate
-    # def divide(x, y):
-    #     return x / y
-    # num1 = 
-    # num2 = ()
-    # if():
-    #     print(num1, "/", num2, "=", divide(num1, num2))
-    # End of attempt
     def convert_time(self, time):
         day = time // (24 * 3600)
         time = time % (24 * 3600)
@@ -93,7 +85,7 @@ class MainWindow(QMainWindow):
         minutes = time // 60
         time %= 60
         seconds = time
-        return "d:h:m:s-> %d:%d:%d:%d" % (day, hour, minutes, seconds)
+        return "It would take -> %d:%d:%d:%d" % (day, hour, minutes, seconds)
 
     def calculate(self):
         distance=float(self.distance_input.text())
